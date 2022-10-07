@@ -6,8 +6,7 @@ package epam.songservice.constants;
 
 public final class PathVariableParam {
 
-  public static final String NAME = "name";
-  public static final String FILES = "files";
+  public static final String SONG_NAME = "songName";
 
   private PathVariableParam() {}
 }
