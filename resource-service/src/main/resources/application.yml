@@ -21,3 +21,16 @@ config:
       access-key: localstack
       secret-key: localstack
 
+      app:
+        message: message successfully sent
+      spring:
+        rabbitmq:
+          host: localhost
+          password: guest
+          port: 15672
+          username: guest
+          exchange: user.exchange
+          routingkey: user.routingkey
+      server:
+        port: 8081
+

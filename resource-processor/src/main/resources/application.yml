@@ -1,0 +1,39 @@
+
+rabbitmq:
+  exchanges:
+    internal: internal.exchange
+    queues:
+      notification: notification.queue
+    routing-keys:
+      internal-notification: internal-notification.routing-key
+
+config:
+  aws:
+    region: us-east-1
+    sns:
+      url: http://127.0.0.1:4566
+      access-key: localstack
+      secret-key: localstack
+      topic-name: dandelion-item-info-topic
+    sqs:
+      url: http://127.0.0.1:4566
+      access-key: localstack
+      secret-key: localstack
+      queue-name: dandelion-item-info-queue
+
+cloud:
+  aws:
+    stack:
+      auto: false
+    region:
+      static: us-east-1
+
+      spring:
+        rabbitmq:
+          host: localhost
+          password: guest
+          port: 15672
+          username: guest
+          exchange: user.exchange
+          queue: user.queue
+          routingkey: user.routingkey

@@ -3,6 +3,8 @@ package epam.resourceservice.service;
 import epam.resourceservice.domain.ResourceFile;
 import epam.resourceservice.repository.ResourceFileRepository;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
 
@@ -10,9 +12,16 @@ import reactor.core.publisher.Flux;
 @Slf4j
 public class ResourceFileService {
 
-    private final ResourceFileRepository resourceFileRepository;
+    @Value("${spring.rabbitmq.exchange}")
+    private String exchange;
 
-    public ResourceFileService(ResourceFileRepository resourceFileRepository) {
+    @Value("${spring.rabbitmq.routingkey}")
+    private String routingkey;
+    private final ResourceFileRepository resourceFileRepository;
+    private RabbitTemplate rabbitTemplate;
+
+    public ResourceFileService(RabbitTemplate rabbitTemplate, ResourceFileRepository resourceFileRepository) {
+        this.rabbitTemplate = rabbitTemplate;
         this.resourceFileRepository = resourceFileRepository;
     }
 
@@ -29,6 +38,10 @@ public class ResourceFileService {
     public Flux<ResourceFile> getFileByName(String fileName) {
         log.info("Retrieving file by name: '{}'", fileName);
         return resourceFileRepository.findResourceFileByFileName(fileName);
+    }
+
+    public void sendMessage(ResourceFile file) {
+        rabbitTemplate.convertAndSend(exchange, routingkey, file);
     }
 
 }

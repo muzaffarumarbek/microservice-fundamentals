@@ -6,11 +6,13 @@ import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.relational.core.mapping.Table;
+import org.springframework.stereotype.Component;
 
 @Data
 @Accessors(chain = true)
 @AllArgsConstructor
 @NoArgsConstructor
+@Component
 @Table("resource_file")
 public class ResourceFile {
     @Id
