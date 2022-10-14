@@ -1,4 +1,3 @@
-
 package com.epam.resourceprocessor.service.impl;
 
 import com.epam.resourceprocessor.model.domain.SongInfo;
